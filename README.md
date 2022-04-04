@@ -14,9 +14,9 @@ plugins.
 
 **Optimizations**
 
-- 1. less-repetitive inline-svg usage keepng your payloads smaller. You get this just by using icons as components. You don't even nede this addon for that <3>
-- 2. tree-shake unused icons. You get this purely by using embroider for your build, no other configuration required! You don't even need this addon for that <3
-- 3. don't ship SVGs as JS code. Using this addon your SVGs will be extracted to `public/assets/component-icons/**/*.svg. This reduces the JS bundle size and allows for these images to be served from cache. We'll even keep a stable fingerprint for them between builds if they haven't changed. The magic here is `use`, your components are converted into this still tree-shakeable form:
+- 1. less-repetitive inline-svg usage - which keeps your payloads smaller. You get this just by using icons as components. You don't even nede this addon for that <3 !
+- 2. tree-shake unused icons. You get this purely by using embroider for your build, no other configuration required! You don't even need this addon for that <3 !
+- 3. don't ship SVGs as JS code. Using this addon your SVGs will be extracted to `public/assets/component-icons/**/*.svg`. This reduces the JS bundle size and allows for these images to be served from cache. We'll even keep a stable fingerprint for them between builds if they haven't changed. The magic here is `use`, your components are converted into this still tree-shakeable form:
 
 ```hbs
 <svg ...attributes xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +26,7 @@ plugins.
 
 This form allows us to re-use SVG images and cache them while retaining the ability to style them inline.
 
-- 4. Automatically convert only the used SVGs into a sprite. We'll parse your templates and find which icons were actually used, then create a sprite for them. The output from the optimization in step-3 changes to:
+- 4. Automatically convert only the used SVGs into symbols and a sprite. We'll parse your templates and find which icons were actually used, then create a sprite for them. The output from the optimization in step-3 changes to:
 
 ```hbs
 <svg ...attributes xmlns="http://www.w3.org/2000/svg">
