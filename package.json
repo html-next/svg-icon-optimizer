@@ -1,13 +1,15 @@
 {
   "name": "@html-next/svg-icon-optimizer",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "SVG Icon Performance Optimization",
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": {
+    "git": "git@github.com:html-next/svg-icon-optimizer.git"
+  },
   "license": "MIT",
-  "author": "",
+  "author": "Chris Thoburn <runspired@gmail.com>",
   "directories": {
     "doc": "doc",
     "test": "tests"
