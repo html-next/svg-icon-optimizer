@@ -1,0 +1,11 @@
+{{!placeholder while I finish off the svg optimizer}}
+<svg
+  class="svg-icon"
+  role="img"
+  ...attributes
+  xmlns="http://www.w3.org/2000/svg"
+>
+  {{yield}}
+  {{! if an icon needs a11y support, this allows title/desc to be added}}
+  <use xlink:href="assets/component-icons/{{@name}}.svg"></use>
+</svg>
