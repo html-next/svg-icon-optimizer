@@ -2,6 +2,7 @@
 
 const Funnel = require("broccoli-funnel");
 const merge = require("broccoli-merge-trees");
+const path = require("path");
 
 function dasherize(str) {
   return str.replace(/[A-Z]/g, function (char, index) {
@@ -33,26 +34,33 @@ function templatePrecompiler(env, usedIcons) {
 module.exports = {
   name: require('./package').name,
 
-  treeForAddon(tree) {
-    return new Funnel(tree, {
-      exclude: "addon/components/icon/**",
-    });
+  parentIsAddon() {
+    return this.parent !== this.project;
   },
 
-  treeForApp(tree) {
-    return new Funnel(tree, {
-      exclude: "addon/components/icon/**",
-    });
+  pathForMainFilesRoot() {
+    const projectPath = this.parent.root || require.resolve(this.parent.options.name);
+
+    return path.join(projectPath, this.parentIsAddon() ? "addon" : "app");
+  },
+
+  preprocessTree(type, tree) {
+    if (type === "template") {
+      return new Funnel(tree, {
+        exclude: ["components/icon/**"],
+      });
+    }
+    return tree;
   },
 
   treeForPublic(tree) {
-    const treeForIcons = new Funnel(`${__dirname}/addon/components/icon`, {
+    const treeForIcons = new Funnel(path.join(this.pathForMainFilesRoot(), "./components/icon"), {
       destDir: "assets/component-icons",
       getDestinationPath(relativePath) {
         return relativePath.replace(".hbs", ".svg");
       },
     });
-    return merge([tree, treeForIcons], { overwrite: true });
+    return tree ? merge([tree, treeForIcons], { overwrite: true }) : treeForIcons;
   },
 
   setupPreprocessorRegistry(type, registry) {
