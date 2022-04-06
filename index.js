@@ -70,7 +70,6 @@ module.exports = {
   },
 
   setupPreprocessorRegistry(type, registry) {
-    this._super.setupPreprocessorRegistry(type, registry);
     const usedIcons = new Map();
     // TODO make this something in the file system
     this.usedIcons = usedIcons;
