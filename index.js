@@ -20,7 +20,7 @@ function templatePrecompiler(env, usedIcons) {
           const tag = node.tag;
           const parts = node.tag.split('::');
           parts.shift();
-          const fullName = dasherize(parts.join('/'));
+          const fullName = parts.map(dasherize).join('/');
           usedIcons.set(fullName, tag);
           node.tag = 'SVGIcon';
           const attr = b.attr('@name', b.text(fullName));

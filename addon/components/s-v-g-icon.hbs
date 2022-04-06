@@ -2,10 +2,11 @@
 <svg
   class="svg-icon"
   role="img"
+  viewbox="0 0 100 100"
   ...attributes
   xmlns="http://www.w3.org/2000/svg"
 >
   {{yield}}
   {{! if an icon needs a11y support, this allows title/desc to be added}}
-  <use xlink:href="assets/component-icons/{{@name}}.svg"></use>
+  <use xlink:href="assets/component-icons/{{@name}}.svg" />
 </svg>
