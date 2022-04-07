@@ -7,6 +7,7 @@ const path = require('path');
 const SpriteConfigGenerator = require('./lib/sprite-config-generator');
 const SpriteAssembler = require('./lib/sprite-assembler');
 const dasherize = require('./lib/utils/dasherize');
+const BroccoliDebug = require('broccoli-debug');
 
 function templatePrecompiler(env) {
   const b = env.syntax.builders;
@@ -42,10 +43,24 @@ module.exports = {
   },
 
   preprocessTree(type, tree) {
-    if (type === 'template') {
+    console.log('setting up preprocessTree');
+    const parentName =
+      typeof this.parent.name === 'string'
+        ? this.parent.name
+        : this.parent.name();
+    if (type === 'js') {
+      // prevent the glimmer precompile from including js files for these
       return new Funnel(tree, {
-        exclude: ['components/icon/**'],
+        exclude: [`${parentName}/components/icon/**/*.js`],
       });
+    }
+    if (type === 'template') {
+      return new BroccoliDebug(
+        new Funnel(tree, {
+          exclude: [`${parentName}/components/icon/**/*.hbs`],
+        }),
+        'html-next:hbs-sans-svg'
+      );
     }
     return tree;
   },
@@ -67,7 +82,10 @@ module.exports = {
         return relativePath.replace('.hbs', '.svg');
       },
     });
-    const configTree = new SpriteConfigGenerator(treeForTemplates);
+    const configTree = new BroccoliDebug(
+      new SpriteConfigGenerator(treeForTemplates),
+      'html-next:sprite-config'
+    );
 
     const TrulyRemoveComments = {
       name: 'Remove Comments Starting With !',

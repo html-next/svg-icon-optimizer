@@ -33,6 +33,7 @@
     "broccoli-funnel": "^3.0.8",
     "broccoli-merge-trees": "^4.2.0",
     "broccoli-persistent-filter": "^3.1.2",
+    "broccoli-debug": "^0.6.5",
     "safe-stable-stringify": "^2.3.1",
     "svgo": "^2.8.0",
     "broccoli-plugin": "^4.0.7",
