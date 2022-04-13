@@ -43,7 +43,6 @@ module.exports = {
   },
 
   preprocessTree(type, tree) {
-    console.log('setting up preprocessTree');
     const parentName =
       typeof this.parent.name === 'string'
         ? this.parent.name
@@ -82,8 +81,10 @@ module.exports = {
         return relativePath.replace('.hbs', '.svg');
       },
     });
+    const config = this.getConfig();
+    console.log({ config });
     const configTree = new BroccoliDebug(
-      new SpriteConfigGenerator(treeForTemplates),
+      new SpriteConfigGenerator(treeForTemplates, config),
       'html-next:sprite-config'
     );
 
@@ -116,6 +117,20 @@ module.exports = {
     return tree
       ? merge([tree, spriteTree, compiled], { overwrite: true })
       : merge([spriteTree, compiled], { overwrite: true });
+  },
+
+  getConfig() {
+    if (this.parentIsAddon()) {
+      let options = this.parent.options || {};
+      return options.svgIconOptimizer || {};
+    } else {
+      const app = this._findHost();
+
+      let options = (app.options = app.options || {});
+      options.svgIconOptimizer = options.svgIconOptimizer || {};
+
+      return options.svgIconOptimizer;
+    }
   },
 
   setupPreprocessorRegistry(type, registry) {
