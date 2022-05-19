@@ -1,6 +1,6 @@
 {
   "name": "@html-next/svg-icon-optimizer",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "SVG Icon Performance Optimization",
   "keywords": [
     "ember-addon"
